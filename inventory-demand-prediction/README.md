@@ -269,7 +269,21 @@ python app.py
 Then open **http://127.0.0.1:5000** in your browser, create an account, and
 sign in.
 
-## 17. Project Structure
+## 17. Deploy to Render
+
+The root-level `render.yaml` Blueprint configures this app to deploy from
+`inventory-demand-prediction/`. Create a Render service from that Blueprint,
+or update the existing service to use:
+
+- **Root Directory:** `inventory-demand-prediction`
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `gunicorn app:app`
+
+The trained model files are already tracked in `models/`; deployment does not
+retrain the model. If the deploy log still mentions `insurance_model.pkl` or
+runs `python app.py`, Render is deploying different or stale code/configuration.
+
+## 18. Project Structure
 
 ```
 inventory-demand-prediction/
@@ -306,7 +320,7 @@ inventory-demand-prediction/
 └── reports/                 (ad-hoc export location; live downloads are streamed, not stored here)
 ```
 
-## 18. Future Scope
+## 19. Future Scope
 
 - Add SHAP-based explainability alongside built-in feature importance.
 - Support multi-step (7/30-day) demand forecasting instead of next-day only.
@@ -314,7 +328,7 @@ inventory-demand-prediction/
 - Add per-category or per-store models for chains with heterogeneous demand.
 - Move from SQLite to PostgreSQL and add role-based access (manager vs. staff).
 
-## 19. Conclusion
+## 20. Conclusion
 
 StockSense demonstrates a complete, leakage-safe ML pipeline for demand
 forecasting, wrapped in a real, usable web application. It goes beyond a
